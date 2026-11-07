@@ -1,53 +1,62 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import NavLinks from "@/src/components/NavLinks";
 
 const inter = Inter({ subsets: ["latin"] });
 
+// Set NEXT_PUBLIC_SITE_URL to your real domain so link previews use absolute URLs.
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3000");
+
+export const metadata = {
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Didier Murillo | R Shiny Developer & Data Scientist",
+    template: "%s | Didier Murillo",
+  },
+  description:
+    "Didier Murillo builds R Shiny apps, R packages and Plumber APIs, backed by statistics expertise in experimental design, mixed models and forecasting.",
+  openGraph: {
+    type: "website",
+    title: "Didier Murillo | R Shiny Developer & Data Scientist",
+    description:
+      "R Shiny apps, R packages and APIs, backed by real statistics expertise.",
+    images: ["/didier-profile.jpeg"],
+  },
+};
+
+const focusRing =
+  "rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2";
+
 export default function RootLayout({ children }) {
   return (
-    <div className="flex flex-col min-h-screen">
-      <div className="flex-grow">
-        <div className="main-content">
+    <html lang="en">
+      <body className={`${inter.className} flex min-h-screen flex-col`}>
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-white focus:p-2 focus:text-gray-900"
+        >
+          Skip to content
+        </a>
+        <header className="bg-gray-900 text-white">
           <nav
-            className={`nav-gradient text-white p-4 ${inter.className} font-sans flex justify-between items-center`}
+            aria-label="Main"
+            className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-4"
           >
-            <ul className="flex space-x-4">
-              {/* Navigation links */}
-              <li>
-                <a href="/" className="hover:text-gray-300">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a href="/projects" className="hover:text-gray-300">
-                  Projects
-                </a>
-              </li>
-              <li>
-                <a href="/technology" className="hover:text-gray-300">
-                  Technology
-                </a>
-              </li>
-              <li>
-                <a href="/articles" className="hover:text-gray-300">
-                  Articles
-                </a>
-              </li>
-              <li>
-                <a href="/about" className="hover:text-gray-300">
-                  About
-                </a>
-              </li>
-            </ul>
-            <div className="flex">
+            <NavLinks />
+            <div className="flex gap-4">
               <a
                 href="https://github.com/DidierMurilloF"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-gray-300 mx-2"
+                aria-label="GitHub (opens in new tab)"
+                className={`hover:text-gray-300 ${focusRing}`}
               >
                 <svg
-                  className="w-6 h-6"
+                  className="h-6 w-6"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                   aria-hidden="true"
@@ -63,10 +72,11 @@ export default function RootLayout({ children }) {
                 href="https://www.linkedin.com/in/damurillof/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-gray-300 mx-2"
+                aria-label="LinkedIn (opens in new tab)"
+                className={`hover:text-gray-300 ${focusRing}`}
               >
                 <svg
-                  className="w-6 h-6"
+                  className="h-6 w-6"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                   aria-hidden="true"
@@ -76,17 +86,17 @@ export default function RootLayout({ children }) {
               </a>
             </div>
           </nav>
+        </header>
+        <main id="main" className="mx-auto w-full max-w-5xl flex-grow px-4 py-10">
           {children}
-        </div>
-      </div>
-      <footer className="py-4 bg-black text-white text-center w-full">
-        <div className="container mx-auto px-4">
-          <p>
+        </main>
+        <footer className="w-full bg-black py-4 text-center text-white">
+          <p className="px-4">
             &copy; {new Date().getFullYear()} Didier Murillo. All rights
             reserved.
           </p>
-        </div>
-      </footer>
-    </div>
+        </footer>
+      </body>
+    </html>
   );
 }

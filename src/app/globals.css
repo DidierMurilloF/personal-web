@@ -1,27 +1,10 @@
-/* globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.thumbs .swiper-slide {
-  opacity: 0.25;
-}
-
-.thumbs .swiper-slide-thumb-active {
-  opacity: 1;
-}
-
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900;
   }
 }
 
@@ -29,44 +12,4 @@
   .text-balance {
     text-wrap: balance;
   }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-.nav-background {
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-/* Example CSS for a responsive, custom-width layout */
-.main-content {
-  max-width: 1200px; /* or whatever max width you prefer */
-  margin: auto; /* Centers the content */
-  padding: 20px; /* Adds some space inside the container */
-}
-
-@keyframes pulse-animation {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-.animate-pulse {
-  animation: pulse-animation 2s infinite;
 }

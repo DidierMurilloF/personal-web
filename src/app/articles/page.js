@@ -1,31 +1,17 @@
-import React from "react";
-import Head from "next/head";
+import { pageTitle } from "../ui";
 
-const Articles = () => {
-  return (
-    <>
-      <Head>
-        <title>Articles</title>
-        <meta
-          name="description"
-          content="Learn more about my work as an R Shiny Developer."
-        />
-      </Head>
-      <main className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-center my-12">Articles</h1>
-        <section>
-          <p className="text-lg">
-            As an R Shiny Developer with over six years of experience, I
-            specialize in creating dynamic R Shiny applications/dashboards,
-            developing robust APIs, and building comprehensive R packages. My
-            career is marked by a passion for developing interactive solutions
-            that leverage the full potential of R, ensuring that each project
-            not only meets but exceeds client expectations.
-          </p>
-        </section>
-      </main>
-    </>
-  );
+// Hidden from the nav until articles are published.
+export const metadata = {
+  title: "Articles",
+  description: "Articles by Didier Murillo on R Shiny, R packages and statistics.",
+  robots: { index: false },
 };
 
-export default Articles;
+export default function Articles() {
+  return (
+    <>
+      <h1 className={pageTitle}>Articles</h1>
+      <p className="text-lg">Articles are coming soon.</p>
+    </>
+  );
+}

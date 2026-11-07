@@ -1,20 +1,28 @@
-import React from "react";
-import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
+import { btnSecondary, pageTitle, GITHUB_URL } from "../ui";
 
-const Technology = () => {
-  return (
-    <>
-      <Head>
-        <title>Didier Murillo - Portfolio | R Shiny Projects</title>
-        <meta
-          name="description"
-          content="Explore the portfolio of Didier Murillo, showcasing innovative R Shiny applications and data science projects. Discover how data can drive decision-making."
-        />
-      </Head>
-    </>
-  );
+// Hidden from the nav until real case studies are added.
+export const metadata = {
+  title: "Projects",
+  description: "Projects by Didier Murillo: R Shiny apps, R packages and APIs.",
+  robots: { index: false },
 };
 
-export default Technology;
+export default function Projects() {
+  return (
+    <>
+      <h1 className={pageTitle}>Projects</h1>
+      <p className="mb-6 text-lg">
+        Case studies are on the way. In the meantime, you can browse my work on
+        GitHub.
+      </p>
+      <a
+        href={GITHUB_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={btnSecondary}
+      >
+        View GitHub
+      </a>
+    </>
+  );
+}
