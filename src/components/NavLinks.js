@@ -3,35 +3,39 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-// Projects and Articles are hidden until they have real content.
 const links = [
-  ["/", "Home"],
-  ["/technology", "Technology"],
   ["/about", "About"],
+  ["/blog", "Blog"],
+  ["/projects", "Projects"],
 ];
 
-export default function NavLinks() {
+export default function NavLinks({ github }) {
   const path = usePathname();
   return (
-    <ul className="flex flex-wrap gap-x-5 gap-y-1">
+    <ul className="flex flex-wrap gap-x-7 gap-y-2 text-[15px] font-medium">
       {links.map(([href, label]) => {
-        const active = href === "/" ? path === "/" : path.startsWith(href);
+        const active = path.startsWith(href);
         return (
           <li key={href}>
             <Link
               href={href}
               aria-current={active ? "page" : undefined}
-              className={`rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
+              className={
                 active
-                  ? "font-semibold underline underline-offset-4"
-                  : "hover:text-gray-300"
-              }`}
+                  ? "text-accent underline underline-offset-[6px]"
+                  : "text-ink hover:text-accent"
+              }
             >
               {label}
             </Link>
           </li>
         );
       })}
+      <li>
+        <a href={github} className="text-ink hover:text-accent">
+          GitHub
+        </a>
+      </li>
     </ul>
   );
 }

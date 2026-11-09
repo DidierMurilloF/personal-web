@@ -1,15 +1,19 @@
-// Shared class names so buttons, links and headings look the same on every page.
+// Shared class names so buttons, headings and containers match on every page.
 
-export const focusRing =
-  "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900";
+export const wrap = "mx-auto w-full max-w-site px-4 sm:px-8";
 
-export const btnSecondary = `inline-flex items-center justify-center rounded-md bg-gray-800 px-6 py-2 text-base font-medium text-white shadow-sm hover:bg-gray-700 w-full md:w-auto ${focusRing}`;
+export const btnPrimary =
+  "inline-flex min-h-[44px] items-center justify-center rounded-lg bg-ink px-5 font-semibold text-white no-underline hover:bg-black";
 
-export const btnPrimary = `inline-flex items-center justify-center rounded-md bg-blue-600 px-6 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 transition-colors w-full md:w-auto ${focusRing}`;
+export const btnSecondary =
+  "inline-flex min-h-[44px] items-center justify-center rounded-lg border border-[#CFCCC4] px-5 font-semibold text-ink no-underline hover:border-ink";
 
-export const pageTitle = "mb-6 text-3xl font-bold md:text-4xl";
-export const sectionTitle = "mb-4 text-2xl font-bold";
+export const eyebrow =
+  "text-sm font-semibold uppercase tracking-[0.08em] text-accent";
 
-// Until there is a contact email or booking link, CTAs point to LinkedIn.
-export const CONTACT_URL = "https://www.linkedin.com/in/damurillof/";
-export const GITHUB_URL = "https://github.com/DidierMurilloF";
+export const pageTitle =
+  "font-display text-4xl font-bold tracking-tight sm:text-5xl";
+
+export const sectionTitle = "font-display text-2xl font-bold sm:text-3xl";
+
+export const card = "rounded-2xl border border-line bg-white";

@@ -4,12 +4,48 @@
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900;
+    @apply bg-paper text-ink antialiased;
+  }
+  a {
+    @apply rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
   }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* Wide tables and display math scroll inside the post instead of the page. */
+.post-body table {
+  display: block;
+  overflow-x: auto;
+  font-size: 0.85em;
+}
+.post-body .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+}
+
+/* Code highlighting (highlight.js classes), tuned for the dark code blocks. */
+.hljs-comment,
+.hljs-quote {
+  color: #9a9a90;
+  font-style: italic;
+}
+.hljs-keyword,
+.hljs-literal,
+.hljs-built_in {
+  color: #7fd3c8;
+}
+.hljs-string,
+.hljs-regexp {
+  color: #e6c07b;
+}
+.hljs-number {
+  color: #f0a27a;
+}
+.hljs-title,
+.hljs-title.function_ {
+  color: #9ec5ff;
+}
+.hljs-operator,
+.hljs-punctuation {
+  color: #cfcfc8;
 }

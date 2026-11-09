@@ -1,78 +1,120 @@
 import Image from "next/image";
+import Link from "next/link";
+import PostRow from "@/src/components/PostRow";
+import ProjectCard from "@/src/components/ProjectCard";
+import { getAllPosts } from "@/src/lib/posts";
+import { projects } from "@/src/content/projects";
+import { now, site, topics } from "@/src/content/site";
 import {
   btnPrimary,
   btnSecondary,
+  card,
+  eyebrow,
   sectionTitle,
-  CONTACT_URL,
-  GITHUB_URL,
+  wrap,
 } from "./ui";
 
 export const metadata = {
-  title: { absolute: "Didier Murillo | R Shiny Developer & Data Scientist" },
+  title: { absolute: `${site.name} | Statistician & R developer` },
 };
 
 export default function Home() {
+  const posts = getAllPosts().slice(0, 3);
   return (
     <>
-      <section className="flex flex-col items-center gap-8 md:flex-row md:items-start">
-        <div className="flex w-full justify-center md:w-1/3">
-          <Image
-            src="/didier-profile.jpeg"
-            alt="Portrait of Didier Murillo"
-            width={300}
-            height={514}
-            priority
-            sizes="(min-width: 768px) 300px, 80vw"
-            className="h-auto w-full max-w-[300px] rounded-lg"
-          />
-        </div>
-        <div className="w-full md:w-2/3">
-          <h1 className="mb-2 text-3xl font-bold md:text-4xl">Didier Murillo</h1>
-          <p className="mb-6 text-lg text-gray-700 md:text-xl">
-            Data Scientist &amp; R Shiny Developer
-          </p>
-          <p className="mb-6 text-base md:text-lg">
-            I&rsquo;m a data scientist and R Shiny developer who builds
-            interactive, data-driven applications. With over six years of
-            experience, I turn complex data into user-friendly tools that people
-            actually use.
-          </p>
-          <h2 className={sectionTitle}>What I can help with</h2>
-          <ul className="mb-8 list-inside list-disc space-y-2">
-            <li>Custom R Shiny apps and dashboards</li>
-            <li>R package development</li>
-            <li>API development with R Plumber and Node.js</li>
-            <li>App containerization with Docker</li>
-            <li>Forecasting and time series analysis</li>
-            <li>Experimental design and mixed model analysis</li>
-          </ul>
-          <div className="flex flex-col gap-4 md:flex-row">
-            <a
-              href={GITHUB_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={btnSecondary}
-            >
-              See my work on GitHub
-            </a>
+      <section className={`${wrap} pb-16 pt-16 sm:pt-24`}>
+        <div className="flex flex-wrap items-center gap-12">
+          <div className="min-w-0 flex-[999_1_520px]">
+            <p className={`${eyebrow} mb-4`}>{site.role}</p>
+            <h1 className="mb-6 font-display text-4xl font-bold leading-[1.05] tracking-tight sm:text-[56px]">
+              Hi, I&rsquo;m Didier. I turn statistics into tools people can
+              use.
+            </h1>
+            <p className="mb-8 max-w-[600px] text-lg leading-relaxed text-muted sm:text-[19px]">
+              I build R Shiny apps, R packages and APIs, with a background in
+              experimental design and mixed models. This is my corner of the
+              internet: who I am, what I&rsquo;m learning, and the things
+              I&rsquo;ve made along the way.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Link href="/blog" className={btnPrimary}>
+                Read the blog
+              </Link>
+              <Link href="/about" className={btnSecondary}>
+                More about me
+              </Link>
+            </div>
+          </div>
+          <div className="flex flex-[1_1_260px] justify-center">
+            <Image
+              src="/didier-profile.jpeg"
+              alt="Portrait of Didier Murillo"
+              width={280}
+              height={340}
+              priority
+              className="h-[340px] w-[280px] rounded-2xl object-cover"
+            />
           </div>
         </div>
       </section>
 
-      <section className="mt-12">
-        <h2 className={sectionTitle}>Let&rsquo;s work together</h2>
-        <p className="mb-4 text-base md:text-lg">
-          Have an analysis that should be an app? Reach out and tell me about
-          it.
-        </p>
-        <a
-          href={CONTACT_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={btnPrimary}
-        >
-          Contact me on LinkedIn
-        </a>
+      {now.length > 0 && (
+        <section className={`${wrap} pb-16`}>
+          <div className={`${card} flex flex-wrap gap-x-8 gap-y-4 px-8 py-7`}>
+            <h2 className="w-36 font-display text-xl font-bold">Right now</h2>
+            <ul className="grid flex-1 basis-[400px] gap-2.5 leading-relaxed">
+              {now.map((item) => (
+                <li key={item.label}>
+                  <strong>{item.label}:</strong> {item.text}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      {posts.length > 0 && (
+        <section className={`${wrap} pb-20`}>
+          <div className="mb-6 flex flex-wrap items-baseline justify-between gap-3">
+            <h2 className={sectionTitle}>Latest writing</h2>
+            <Link href="/blog" className="font-semibold">
+              All posts →
+            </Link>
+          </div>
+          <ul className="border-t border-line">
+            {posts.map((post) => (
+              <PostRow key={post.slug} post={post} />
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <section className={`${wrap} pb-20`}>
+        <div className="mb-6 flex flex-wrap items-baseline justify-between gap-3">
+          <h2 className={sectionTitle}>Things I&rsquo;ve built</h2>
+          <Link href="/projects" className="font-semibold">
+            All projects →
+          </Link>
+        </div>
+        <div className="grid gap-6 md:grid-cols-3">
+          {projects.slice(0, 3).map((p) => (
+            <ProjectCard key={p.name} project={p} />
+          ))}
+        </div>
+      </section>
+
+      <section className={`${wrap} pb-24`}>
+        <h2 className={`${sectionTitle} mb-5`}>What I write about</h2>
+        <ul className="flex flex-wrap gap-2.5">
+          {topics.map((t) => (
+            <li
+              key={t}
+              className="rounded-full bg-accent-soft px-4 py-2.5 font-medium text-accent-dark"
+            >
+              {t}
+            </li>
+          ))}
+        </ul>
       </section>
     </>
   );
