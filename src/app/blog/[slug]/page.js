@@ -105,8 +105,8 @@ export default async function Post({ params }) {
           <div className="flex-1 basis-[300px]">
             <p className="mb-1 font-semibold">Written by {site.name}</p>
             <p className="text-[15px] leading-relaxed text-muted">
-              Statistician and R developer working on agricultural data
-              analytics. <Link href="/about">More about me</Link> ·{" "}
+              Statistician working on digital agriculture and predictive
+              modeling. <Link href="/about">More about me</Link> ·{" "}
               <a href={site.links.linkedin}>Say hi on LinkedIn</a>
               {post.code && (
                 <>

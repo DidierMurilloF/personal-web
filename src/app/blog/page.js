@@ -5,7 +5,7 @@ import { pageTitle, wrap } from "../ui";
 export const metadata = {
   title: "Blog",
   description:
-    "Writing by Didier Murillo on R, Shiny, statistics, experimental design and plant breeding analytics.",
+    "Writing by Didier Murillo on digital agriculture, predictive modeling, machine learning, experimental design and R.",
 };
 
 export default function Blog() {
@@ -14,7 +14,7 @@ export default function Blog() {
     <section className={`${wrap} pb-24 pt-16 sm:pt-20`}>
       <h1 className={`${pageTitle} mb-4`}>Blog</h1>
       <p className="mb-8 max-w-[640px] text-lg leading-relaxed text-muted sm:text-[19px]">
-        Notes on R, Shiny, statistics and shipping data tools. Written for my
+        Notes on digital agriculture, predictive modeling, machine learning and R. Written for my
         future self and anyone stuck on the same problem.
       </p>
       <BlogList posts={posts} />

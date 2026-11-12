@@ -1,7 +1,6 @@
-import Link from "next/link";
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import NavLinks from "@/src/components/NavLinks";
+import SiteHeader from "@/src/components/SiteHeader";
 import { site } from "@/src/content/site";
 import { wrap } from "./ui";
 
@@ -16,7 +15,7 @@ const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
 export const metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} | Statistician & R developer`,
+    default: `${site.name} | ${site.title}`,
     template: `%s | ${site.name}`,
   },
   description: site.description,
@@ -44,26 +43,13 @@ export default function RootLayout({ children }) {
         >
           Skip to content
         </a>
-        <header className="border-b border-line">
-          <nav
-            aria-label="Main"
-            className={`${wrap} flex flex-wrap items-center justify-between gap-4 py-5`}
-          >
-            <Link
-              href="/"
-              className="font-display text-xl font-bold text-ink no-underline"
-            >
-              {site.name}
-            </Link>
-            <NavLinks github={github} />
-          </nav>
-        </header>
+        <SiteHeader name={site.name} github={github} />
 
         <main id="main" className="flex-grow">
           {children}
         </main>
 
-        <footer className="bg-ink text-[#E8E8E3]">
+        <footer className="bg-forest text-forest-text">
           <div
             className={`${wrap} flex flex-wrap justify-between gap-8 pb-10 pt-14`}
           >
@@ -71,9 +57,9 @@ export default function RootLayout({ children }) {
               <p className="mb-2 font-display text-2xl font-semibold text-white">
                 Say hi
               </p>
-              <p className="leading-relaxed text-[#BDBDB6]">
-                Questions about a post, an idea, or just want to connect? I read
-                every message.
+              <p className="leading-relaxed">
+                Working on field data, predictive models or ag tools? I&rsquo;d
+                like to hear about it.
               </p>
             </div>
             <ul
@@ -81,12 +67,12 @@ export default function RootLayout({ children }) {
               className="flex flex-wrap items-center gap-6 font-medium"
             >
               <li>
-                <a href={linkedin} className="text-white hover:text-accent-soft">
+                <a href={linkedin} className="text-white hover:text-mint">
                   LinkedIn
                 </a>
               </li>
               <li>
-                <a href={github} className="text-white hover:text-accent-soft">
+                <a href={github} className="text-white hover:text-mint">
                   GitHub
                 </a>
               </li>
@@ -94,20 +80,20 @@ export default function RootLayout({ children }) {
                 <li>
                   <a
                     href={`mailto:${email}`}
-                    className="text-white hover:text-accent-soft"
+                    className="text-white hover:text-mint"
                   >
                     Email
                   </a>
                 </li>
               )}
               <li>
-                <a href="/rss.xml" className="text-white hover:text-accent-soft">
+                <a href="/rss.xml" className="text-white hover:text-mint">
                   RSS
                 </a>
               </li>
             </ul>
           </div>
-          <p className={`${wrap} pb-8 text-sm text-[#9A9A93]`}>
+          <p className={`${wrap} pb-8 text-sm text-forest-dim`}>
             &copy; {new Date().getFullYear()} {site.name}
           </p>
         </footer>

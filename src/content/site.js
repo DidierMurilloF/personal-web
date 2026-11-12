@@ -4,10 +4,10 @@
 export const site = {
   name: "Didier Murillo",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://didiermurillo.com",
-  role: "Statistician · Data scientist · R developer",
-  tagline: "Statistician by training and developer by calling.",
+  role: "Digital agriculture · Predictive modeling · AI",
+  title: "Digital agriculture & predictive modeling",
   description:
-    "Didier Murillo's personal site: writing on R, Shiny, statistics and experimental design, plus the apps and packages he has built.",
+    "Didier Murillo is a statistician working in digital agriculture: field experiments, predictive models for plant breeding, and the apps that put them to use.",
   links: {
     github: "https://github.com/DidierMurilloF",
     linkedin: "https://www.linkedin.com/in/damurillof/",
@@ -16,7 +16,7 @@ export const site = {
   },
 };
 
-// "Right now" box on the home page.
+// "Right now" box on the about page.
 export const now = [
   {
     label: "Working on",
@@ -26,28 +26,55 @@ export const now = [
   // { label: "Learning", text: "..." },
 ];
 
-export const topics = [
-  "R Shiny",
-  "R packages",
-  "Statistics",
-  "Experimental design",
-  "Plant breeding",
-  "APIs & Docker",
+// "From the field to a decision" steps on the home page.
+export const pipeline = [
+  {
+    step: "Field",
+    title: "Experimental design",
+    text: "Randomized, augmented and p-rep trials built so the data can answer the question.",
+    icon: "plots",
+  },
+  {
+    step: "Data",
+    title: "Data pipelines",
+    text: "Phenotypic, genomic and environmental data cleaned and joined into one reproducible pipeline.",
+    icon: "data",
+  },
+  {
+    step: "Model",
+    title: "Predictive modeling",
+    text: "Spatial and mixed models, GAMs, machine learning and genomic prediction, validated honestly.",
+    icon: "curve",
+  },
+  {
+    step: "Decision",
+    title: "Decision tools",
+    text: "Shiny apps, APIs and AI-assisted tools that put the model in the hands of breeders and growers.",
+    icon: "screen",
+  },
 ];
 
-export const skills = [
+export const focus = [
   {
-    title: "R Shiny apps",
-    text: "Interactive apps and dashboards that turn analytical workflows into tools researchers and breeders can use, built with Shiny modules and box.",
+    title: "Digital agriculture",
+    text: "Field trials, plant breeding and agricultural statistics, turned into data products for research programs and the state's farm economy.",
   },
   {
-    title: "R packages & APIs",
-    text: "Reusable R packages and Plumber APIs, containerized with Docker so they run the same everywhere.",
+    title: "Predictive modeling",
+    text: "Spatial trends, genotype effects and forecasting: models that separate the genetic signal from the field noise.",
   },
   {
-    title: "Statistics",
-    text: "Experimental design, mixed and additive models, and predictive pipelines that combine genomic and phenotypic data.",
+    title: "AI in agriculture",
+    text: "Machine learning and AI where they earn their place: faster analysis, clearer results and data people can explore in plain language.",
   },
+];
+
+export const topics = [
+  "Digital agriculture",
+  "Predictive modeling",
+  "Machine learning & AI",
+  "Experimental design",
+  "R & Shiny",
 ];
 
 // Work and education, newest first. The section is hidden while empty.

@@ -2,7 +2,7 @@
 title: "Smoothers in the Field: GAMs for Capturing Treatment Effects and Spatial Trends in Plant Breeding Trials"
 date: "2025-05-05"
 summary: "How Generalized Additive Models can model spatial trends and estimate genotype effects in plant breeding trials, compared side by side with a classical ASReml spatial model."
-tags: ["Statistics", "Experimental design", "R"]
+tags: ["Predictive modeling", "Digital agriculture", "Experimental design"]
 cover: "figures/cover.jpg"
 coverAlt: "Illustration of smooth spatial trends across a field trial"
 code: "https://github.com/DidierMurilloF/PhenoGAMs"

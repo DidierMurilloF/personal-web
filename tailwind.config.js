@@ -9,6 +9,15 @@ module.exports = {
         line: "#E6E4DE",
         muted: "#4A4A46",
         subtle: "#6B6B66",
+        forest: {
+          DEFAULT: "#0B2B27",
+          raised: "#0F3631",
+          line: "#1F4741",
+          border: "#3C6A63",
+          text: "#C9DCD8",
+          dim: "#9FC2BC",
+        },
+        mint: "#7FD3C8",
         accent: {
           DEFAULT: "#0E6E66",
           dark: "#0A4F49",
