@@ -1,18 +1,21 @@
 import Image from "next/image";
+import { JsonLd, pageMetadata, personJsonLd } from "@/src/lib/seo";
 import { focus, now, site } from "@/src/content/site";
 import { resume } from "@/src/content/resume";
 import { btnSecondary, card, pageTitle, sectionTitle, wrap } from "../ui";
 
-export const metadata = {
+export const metadata = pageMetadata({
+  path: "/about",
   title: "About",
   description:
-    "About Didier Murillo, agricultural data scientist: genomic and phenomic prediction, field trial analysis, satellite crop monitoring and the software behind them.",
-};
+    "About Didier Murillo, agricultural data scientist: genomic and phenomic prediction, field trial analysis, satellite crop monitoring and the software behind them."
+});
 
 export default function About() {
   const { cv } = site.links;
   return (
     <>
+      <JsonLd data={personJsonLd()} />
       <section className={`${wrap} pb-14 pt-16 sm:pt-20`}>
         <div className="flex flex-wrap items-start gap-12">
           <Image

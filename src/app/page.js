@@ -7,8 +7,10 @@ import { projects } from "@/src/content/projects";
 import { focus, pipeline, site, topics } from "@/src/content/site";
 import { sectionTitle, wrap } from "./ui";
 import { contactHref } from "@/src/lib/contact";
+import { JsonLd, pageMetadata, personJsonLd, websiteJsonLd } from "@/src/lib/seo";
 
 export const metadata = {
+  ...pageMetadata({ path: "/" }),
   title: { absolute: `${site.name} | ${site.title}` },
 };
 
@@ -57,6 +59,7 @@ export default function Home() {
   const posts = getAllPosts().slice(0, 3);
   return (
     <>
+      <JsonLd data={[personJsonLd(), websiteJsonLd()]} />
       <section className="bg-forest text-white">
         <div className={`${wrap} flex flex-wrap items-center gap-14 pb-24 pt-16 sm:pt-20`}>
           <div className="min-w-0 flex-[999_1_480px]">

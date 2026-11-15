@@ -1,13 +1,15 @@
 import { SmartLink } from "@/src/components/ProjectCard";
+import { pageMetadata } from "@/src/lib/seo";
 import { collab, site } from "@/src/content/site";
 import { contactHref } from "@/src/lib/contact";
 import { card, eyebrow, pageTitle, sectionTitle, wrap } from "../ui";
 
-export const metadata = {
+export const metadata = pageMetadata({
+  path: "/work-with-me",
   title: "Work with me",
   description:
-    "Consulting and research collaboration with Didier Murillo: field trial design and analysis, genomic and phenomic prediction, ag data pipelines and apps, and training.",
-};
+    "Consulting and research collaboration with Didier Murillo: field trial design and analysis, genomic and phenomic prediction, ag data pipelines and apps, and training."
+});
 
 export default function WorkWithMe() {
   const { email } = site.links;

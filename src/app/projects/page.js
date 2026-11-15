@@ -1,13 +1,15 @@
 import ProjectCard, { ProjectVisual, SmartLink } from "@/src/components/ProjectCard";
+import { pageMetadata } from "@/src/lib/seo";
 import { projects } from "@/src/content/projects";
 import { site } from "@/src/content/site";
 import { btnPrimary, btnSecondary, eyebrow, pageTitle, sectionTitle, wrap } from "../ui";
 
-export const metadata = {
+export const metadata = pageMetadata({
+  path: "/projects",
   title: "Projects",
   description:
-    "Digital agriculture and predictive modeling projects by Didier Murillo, including FielDHub and the ND Agriculture KPIs dashboard.",
-};
+    "Digital agriculture and predictive modeling projects by Didier Murillo, including FielDHub and the ND Agriculture KPIs dashboard."
+});
 
 export default function Projects() {
   const featured = projects.find((p) => p.featured);

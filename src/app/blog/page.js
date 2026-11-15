@@ -1,12 +1,14 @@
 import BlogList from "@/src/components/BlogList";
+import { pageMetadata } from "@/src/lib/seo";
 import { getAllPosts } from "@/src/lib/posts";
 import { pageTitle, wrap } from "../ui";
 
-export const metadata = {
+export const metadata = pageMetadata({
+  path: "/blog",
   title: "Blog",
   description:
-    "Writing by Didier Murillo on digital agriculture, predictive modeling, machine learning, experimental design and R.",
-};
+    "Writing by Didier Murillo on digital agriculture, predictive modeling, machine learning, experimental design and R."
+});
 
 export default function Blog() {
   const posts = getAllPosts();

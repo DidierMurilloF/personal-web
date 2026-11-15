@@ -5,6 +5,7 @@ import "katex/dist/katex.min.css";
 import { formatDate, getAllPosts, getPost } from "@/src/lib/posts";
 import { site } from "@/src/content/site";
 import { card } from "../../ui";
+import { JsonLd, articleJsonLd } from "@/src/lib/seo";
 
 export const dynamicParams = false;
 
@@ -21,6 +22,8 @@ export async function generateMetadata({ params }) {
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
       type: "article",
+      url: `/blog/${post.slug}`,
+      siteName: site.name,
       title: post.title,
       description: post.summary,
       publishedTime: post.date,
@@ -40,6 +43,7 @@ export default async function Post({ params }) {
 
   return (
     <article className="pb-24">
+      <JsonLd data={articleJsonLd(post)} />
       <header className="mx-auto max-w-article px-4 pt-14 sm:px-8">
         <Link href="/blog" className="text-sm font-semibold no-underline">
           ← All posts

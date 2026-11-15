@@ -1,11 +1,13 @@
 import { resume } from "@/src/content/resume";
+import { pageMetadata } from "@/src/lib/seo";
 import { site } from "@/src/content/site";
 import { btnPrimary, wrap } from "../ui";
 
-export const metadata = {
+export const metadata = pageMetadata({
+  path: "/cv",
   title: "CV",
-  description: `Resume of ${resume.name}, ${resume.headline}: genomic and phenomic prediction, field trial analysis, satellite crop monitoring and the software that puts models to use.`,
-};
+  description: `Resume of ${resume.name}, ${resume.headline}: genomic and phenomic prediction, field trial analysis, satellite crop monitoring and the software that puts models to use.`
+});
 
 const h2 =
   "mb-3 border-b border-line pb-1.5 font-mono text-[12px] font-semibold uppercase tracking-[0.08em] text-accent print:mb-2 print:text-[9px]";
