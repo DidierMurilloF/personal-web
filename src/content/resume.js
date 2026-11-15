@@ -14,7 +14,7 @@ export const resume = {
   ],
 
   summary:
-    "Agricultural Data Scientist who builds statistical and machine learning models for genomic and phenomic prediction in plant breeding. Expert in phenotypic analysis of field trials, from experimental design to linear mixed models with spatial adjustment for field variation, and in satellite image processing. I turn models into tools that research teams use: R packages (FielDHub, on CRAN), R Shiny and React applications, REST APIs, PostgreSQL databases and Docker deployments, built with AI coding agents (Claude Code, Copilot). I also bring production experience from a regulated industry, building tested R Shiny applications for clinical trial data review as a consultant to Daiichi Sankyo.",
+    "Agricultural Data Scientist who builds statistical and machine learning models for genomic and phenomic prediction in plant breeding. Expert in phenotypic analysis of field trials, from experimental design to linear mixed models with spatial adjustment for field variation. I turn models into tools that research teams use: R packages (FielDHub, on CRAN), R Shiny and React applications, REST APIs, PostgreSQL databases and Docker deployments. I also bring production experience from a regulated industry, building tested R Shiny applications for clinical trial data review as a consultant to Daiichi Sankyo.",
 
   experience: [
     {
@@ -27,7 +27,7 @@ export const resume = {
         "Lead phenotypic analysis of field trials, from experimental design to linear mixed models with spatial adjustment and genotype rankings.",
         "Process satellite imagery for analysis of field trials and agricultural data.",
         "Develop R Shiny, React and JavaScript applications backed by REST APIs and PostgreSQL databases, deployed with Docker.",
-        "Develop R packages for web API integration, using AI coding agents (Claude Code, Copilot) to speed up development and refactoring.",
+        "Develop R packages for web API integration.",
         "Mentor junior statisticians in agricultural statistics and Shiny development, and lead workshops and conference talks on experimental design and statistical analysis in agriculture.",
       ],
     },

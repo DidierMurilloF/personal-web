@@ -100,7 +100,7 @@ export default async function Post({ params }) {
             alt=""
             width={64}
             height={64}
-            className="h-16 w-16 rounded-full object-cover"
+            className="h-16 w-16 rounded-full object-cover object-[50%_25%]"
           />
           <div className="flex-1 basis-[300px]">
             <p className="mb-1 font-semibold">Written by {site.name}</p>
