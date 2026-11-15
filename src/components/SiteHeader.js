@@ -7,6 +7,8 @@ const links = [
   ["/about", "About"],
   ["/blog", "Blog"],
   ["/projects", "Projects"],
+  ["/cv", "CV"],
+  ["/work-with-me", "Work with me"],
 ];
 
 // The home page has a dark hero, so its header is dark too.
@@ -19,7 +21,7 @@ export default function SiteHeader({ name, github }) {
     : "text-accent underline underline-offset-[6px]";
 
   return (
-    <header className={dark ? "border-b border-forest-line bg-forest" : "border-b border-line"}>
+    <header className={`print:hidden ${dark ? "border-b border-forest-line bg-forest" : "border-b border-line"}`}>
       <nav
         aria-label="Main"
         className="mx-auto flex w-full max-w-site flex-wrap items-center justify-between gap-4 px-4 py-5 sm:px-8"

@@ -49,7 +49,7 @@ export default function RootLayout({ children }) {
           {children}
         </main>
 
-        <footer className="bg-forest text-forest-text">
+        <footer className="bg-forest text-forest-text print:hidden">
           <div
             className={`${wrap} flex flex-wrap justify-between gap-8 pb-10 pt-14`}
           >

@@ -49,3 +49,38 @@
 .hljs-punctuation {
   color: #cfcfc8;
 }
+
+/* Printing (the /cv page is printed to public/didier-murillo-cv.pdf). */
+@page {
+  size: Letter;
+  margin: 0.5in 0.6in;
+}
+@media print {
+  body {
+    background: #fff;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+/* Callout boxes in posts (blockquotes), styled like the original distill
+   articles: warm background, orange rule, upright text, no quote marks. */
+.post-body blockquote {
+  border-left: 4px solid #E07B39;
+  background: #FBF3EC;
+  border-radius: 0 8px 8px 0;
+  padding: 0.9em 1.3em;
+  font-style: normal;
+  font-weight: 400;
+  color: #2A2A27;
+}
+.post-body blockquote p:first-of-type::before,
+.post-body blockquote p:last-of-type::after {
+  content: none;
+}
+.post-body img {
+  width: 100%;
+  height: auto;
+}

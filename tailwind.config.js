@@ -33,6 +33,8 @@ module.exports = {
       maxWidth: {
         site: "1040px",
         read: "700px",
+        // Article column: matches the original distill articles (864px of text).
+        article: "928px",
       },
       typography: ({ theme }) => ({
         DEFAULT: {

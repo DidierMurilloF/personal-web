@@ -40,7 +40,7 @@ export default async function Post({ params }) {
 
   return (
     <article className="pb-24">
-      <header className="mx-auto max-w-read px-4 pt-14 sm:px-8">
+      <header className="mx-auto max-w-article px-4 pt-14 sm:px-8">
         <Link href="/blog" className="text-sm font-semibold no-underline">
           ← All posts
         </Link>
@@ -65,25 +65,25 @@ export default async function Post({ params }) {
       </header>
 
       {post.cover && (
-        <div className="mx-auto mb-12 max-w-[860px] px-4 sm:px-8">
+        <div className="mx-auto mb-12 max-w-article px-4 sm:px-8">
           <Image
             src={post.cover}
             alt={post.coverAlt}
             width={1024}
             height={640}
             priority
-            sizes="(min-width: 860px) 800px, 100vw"
+            sizes="(min-width: 928px) 864px, 100vw"
             className="h-auto w-full rounded-2xl"
           />
         </div>
       )}
 
       <div
-        className="post-body prose prose-lg mx-auto max-w-read px-4 sm:px-8 prose-pre:rounded-xl prose-pre:text-sm"
+        className="post-body prose mx-auto max-w-article px-4 text-[16.5px] leading-[1.75] sm:px-8 prose-pre:rounded-xl prose-pre:text-sm"
         dangerouslySetInnerHTML={{ __html: post.html }}
       />
 
-      <footer className="mx-auto mt-12 max-w-read px-4 sm:px-8">
+      <footer className="mx-auto mt-12 max-w-article px-4 sm:px-8">
         {post.tags.length > 0 && (
           <ul className="mb-10 flex flex-wrap gap-2">
             {post.tags.map((t) => (
@@ -105,8 +105,8 @@ export default async function Post({ params }) {
           <div className="flex-1 basis-[300px]">
             <p className="mb-1 font-semibold">Written by {site.name}</p>
             <p className="text-[15px] leading-relaxed text-muted">
-              Statistician working on digital agriculture and predictive
-              modeling. <Link href="/about">More about me</Link> ·{" "}
+              Agricultural data scientist working on genomic and phenomic
+              prediction, field trials and satellite crop monitoring. <Link href="/about">More about me</Link> ·{" "}
               <a href={site.links.linkedin}>Say hi on LinkedIn</a>
               {post.code && (
                 <>

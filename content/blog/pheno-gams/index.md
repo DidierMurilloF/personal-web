@@ -13,7 +13,7 @@ code: "https://github.com/DidierMurilloF/PhenoGAMs"
 
 Agricultural field trials are essential for evaluating genotype performance across diverse environments in plant breeding. Yet spatial trends—driven by soil variability, irrigation, or microclimatic gradients—often introduce noise that can obscure the true genetic signal. Traditional linear mixed models have long been the standard approach for accounting for this spatial structure while estimating treatment effects.
 
-Generalized Additive Models (GAMs) offer a flexible, non-parametric alternative capable of modeling smooth spatial surfaces and complex field patterns. Despite their strong theoretical appeal, GAMs remain underutilized in plant breeding applications. In this article, we explore how GAMs can be applied to field trial data and compare their performance to a classical spatial mixed model built using ASReml. We focus on model-fit diagnostics, spatial trend capture, and agreement in genotype rankings—measured using correlation and Kendall’s tau—to assess their utility in modern breeding experiments.
+Generalized Additive Models (GAMs) offer a flexible way to model smooth spatial surfaces and complex field patterns. They are not a departure from mixed models: a penalized spline can be written as a random effect, and when its smoothing penalty is estimated by REML, as `mgcv` does, the GAM is itself a linear mixed model. What changes is how the spatial trend is described: smooth functions of row and column instead of a covariance structure on the residuals. Despite their strong theoretical appeal, GAMs remain underutilized in plant breeding applications. In this article, we explore how GAMs can be applied to field trial data and compare their performance to a classical spatial mixed model built using ASReml. We focus on model-fit diagnostics, spatial trend capture, and agreement in genotype rankings—measured using correlation and Kendall’s tau—to assess their utility in modern breeding experiments.
 
 ## Data
 
@@ -32,17 +32,22 @@ Note: Throughout this article, we use the terms genotype and treatment interchan
 
 ## Basic GAM Model
 
-In a GAM model, we replace strictly linear terms with smooth functions estimated from the data. For example, instead of assuming a linear relationship between yield and row, we estimate a smooth function $f_1(ROW)$. The goal is to capture subtle trends in the field that would otherwise be modeled as random effects or spatial residuals.
+In a GAM model, we replace strictly linear terms with smooth functions estimated from the data. For example, instead of assuming a linear relationship between yield and row, we estimate a smooth function $f_1(ROW)$. The goal is to capture subtle trends in the field that would otherwise be modeled through spatially correlated residuals. Because each smooth is a penalized spline with its penalty estimated by REML (here, fast REML in `bam()`), the model below is a linear mixed model in which the smooths and the `bs = "re"` terms are random effects.
 
-### Model Equation:
+### Model Equation
 
 We begin with a model for the yield $y_{ijk}$ at each plot $(i,j)$ with treatment $k$:
 
 $$
-YIELD = f_1(ROW) + f_2(COLUMN) + f_3(ROW_{fc}) + f_4(COLUMN_{fc}) + f_5(TREATMENT)
+\begin{aligned}
+YIELD = {} & \mu + f_1(ROW) + f_2(COLUMN) + f_3(ROW_{fc}) + f_4(COLUMN_{fc}) \\
+& + f_5(TREATMENT) + \varepsilon
+\end{aligned}
 $$
 
 Where:
+
+- $\mu$ is the overall mean and $\varepsilon$ the independent residual error
 
 - $f_1$ and $f_2$ are smooth spatial trends modeled with penalized splines (bs = “ps”)
 
@@ -117,7 +122,7 @@ These predictions include the predicted yield for each genotype, associated stan
 
 To evaluate the GAM approach in context, we fit a traditional linear mixed model using the ASReml package. This model includes fixed effects for field layout (ROW and COLUMN), along with smooth spatial trends (`spl()`) and random effects for genotype (`TREATMENT`). The model setup mirrors the structure used in the GAM, allowing for a fair comparison of best linear unbiased predictions (BLUPs) and spatial adjustment.
 
-The equivalent Mixed model using the R package `ASReml` is
+The comparable mixed model using the R package `ASReml` is below. It is not identical: it has linear row and column trends as fixed effects, and no random row and column factor effects.
 
 ```r
 asreml_m1 <- asreml(
@@ -130,7 +135,7 @@ asreml_m1 <- asreml(
 asreml_m1 <- update(asreml_m1)
 ```
 
-### Genotype-Level Predictions - ASReml
+### Genotype-Level Predictions (ASReml)
 
 Once the ASReml model is fitted, extracting the predicted genotype is straightforward using the `predict()` function. We augmented the predictions with 95% confidence intervals based on the standard errors:
 
@@ -167,23 +172,24 @@ The diagnostic plots for both the GAM and ASReml models show some clear issues. 
 
 ## Improving the GAM Model
 
-To further evaluate the flexibility of Generalized Additive Models, we introduced a more complex spatial structure into the model. The objective here is to better capture residual spatial trends and improve model fit. While `ASReml` supports two-dimensional autoregressive residual structures (`AR1 ⊗ AR1`), the `mgcv` package in R only supports autoregressive modeling along a single dimension. To compensate for this limitation, we included a tensor product smoother between rows and columns using random effect bases (`bs = "re"`). This tensor interaction term acts like a spatial nugget, allowing us to capture localized deviations not explained by marginal row or column effects.
+To further evaluate the flexibility of Generalized Additive Models, we introduced a more complex spatial structure into the model. The objective here is to better capture residual spatial trends and improve model fit. While `ASReml` supports two-dimensional autoregressive residual structures (`AR1 ⊗ AR1`), the `mgcv` package in R only supports autoregressive modeling along a single dimension. To compensate for this limitation, we included a tensor product of rows and columns using random effect bases (`bs = "re"`), which is a random row × column interaction. Because each row × column cell is a single plot, this term acts like a spatial nugget, allowing us to capture localized deviations not explained by marginal row or column effects.
 
 Additionally, we modeled residual correlation along the row dimension using an `AR(1)` structure. Since `mgcv::bam()` requires the autocorrelation parameter `rho` to be manually specified, we estimated it via a grid search and found the best-performing value to be `rho = 0.55`.
 
 The upgraded GAM model can be expressed as
 
 $$
-YIELD = f_1(ROW) + f_2(COLUMN) + f_3(ROW_{fc}) + f_4(COLUMN_{fc}) + f_5(TREATMENT) +
-$$
- 
-$$
-f_6(ROW_{fc}, COLUMN_{fc})
+\begin{aligned}
+YIELD = {} & \mu + f_1(ROW) + f_2(COLUMN) + f_3(ROW_{fc}) + f_4(COLUMN_{fc}) \\
+& + f_5(TREATMENT) + f_6(ROW_{fc}, COLUMN_{fc}) + \varepsilon
+\end{aligned}
 $$
 
 Where:
 
-- $f_6$ is the tensor product within Rows and Columns with random effects (bs = “re”) for both factors.
+- $f_6$ is the tensor product of the row and column factors with random-effect bases (bs = “re”), i.e. a random row × column interaction
+
+- $\varepsilon$ now follows an AR(1) process along rows, with $\rho = 0.55$
 
 The GAM model is specified as follows:
 
@@ -244,7 +250,7 @@ asreml_m2 <- asreml(
 asreml_m2 <- update(asreml_m2)
 ```
 
-### Genotype-Level Predictions - ASReml
+### Genotype-Level Predictions (Fully Spatial ASReml)
 
 The updated ASReml linear mixed model predictions are:
 
@@ -267,7 +273,7 @@ pred_asreml2 |>
 | G-106     |        69.92742 | 0.5838491 | Estimable | 68.78309 | 71.07174 |
 | G-107     |        61.36701 | 0.4274540 | Estimable | 60.52921 | 62.20480 |
 
-## Model fit diagnostics
+## Model fit diagnostics: improved models
 
 Let us check the new models result diagnostics. The following figure shows the residual histograms, fitted values vs residuals, and QQ-plots for the GAM model.
 
@@ -279,9 +285,9 @@ In the case of the ASReml model we have
 
 The new diagnostic plots show a substantial improvement in model fit for both ASReml and GAM compared to our earlier models.
 
-- **Histograms of Residuals:** The residuals for both models are now more symmetrically distributed around zero, with no major skewness or multimodal patterns, suggesting better homoscedasticity.
+- **Histograms of Residuals:** The residuals for both models are now more symmetrically distributed around zero, with no major skewness or multimodal patterns.
 
-- **Residuals vs Fitted Values:** The previously observed systematic pattern near the center has largely diminished. The residuals now appear randomly scattered around zero, indicating reduced overfitting and improved variance stabilization across the fitted range. The slight curvature in the LOESS line is minor and expected in spatial data but no longer indicates strong model misspecification.
+- **Residuals vs Fitted Values:** The previously observed systematic pattern near the center has largely diminished. The residuals now appear randomly scattered around zero with a similar spread across the fitted range, indicating no remaining systematic lack of fit and roughly constant variance. The slight curvature in the LOESS line is minor and expected in spatial data but no longer indicates strong model misspecification.
 
 - **QQ Plots:** Both models show closer adherence to the theoretical normal line, especially in the central part of the distribution. Some deviation remains in the tails, but the overall alignment supports the assumption of normally distributed residuals.
 
@@ -291,11 +297,11 @@ Together, these results suggest that incorporating spatial structure (modeling t
 
 To better understand the spatial structure of model residuals, we visualize them using field-layout heatmaps. Each tile represents a plot in the field, with colors indicating the magnitude and direction of residuals:
 
-- Dark purple for large negative residuals (underestimation),
+- Dark purple for large negative residuals (the model overestimated yield),
 
 - Green for near-zero residuals (good fit)
 
-- Yellow for large positive residuals (overestimation).
+- Yellow for large positive residuals (the model underestimated yield).
 
 These heatmaps help us detect residual spatial trends not captured by the models, such as blocks or streaks of consistently high or low residuals, which may suggest remaining unmodeled spatial variation.
 
@@ -305,7 +311,7 @@ The residuals from the GAM model are mostly centered around zero, with only a fe
 
 ## Model Predictions: Correlation and Rankings
 
-To assess the agreement between the two modeling approaches, we compare the predictions generated by the Generalized Additive Model (GAM) and the classical Linear Mixed Model (LMM) fitted using ASReml. We focus on both the correlation of predicted values and the consistency of genotype rankings, which are key aspects for selection decisions in breeding programs.
+To assess the agreement between the two modeling approaches, we compare the predictions generated by the Generalized Additive Model (GAM) and the classical spatial linear mixed model fitted using ASReml. Both are mixed models; they differ in how they represent the spatial trend. We focus on both the correlation of predicted values and the consistency of genotype rankings, which are key aspects for selection decisions in breeding programs.
 
 ### Correlation of Predicted Values
 
@@ -338,7 +344,7 @@ rank_comparison <- rank_gam_total |>
   dplyr::mutate(diff = rank_gam_total - rank_asreml)
 ```
 
-### Kendall Correlation:
+### Kendall Correlation
 
 ```r
 cor(rank_comparison$rank_gam_total, rank_comparison$rank_asreml, method = "kendall")
@@ -372,7 +378,7 @@ Despite their different formulations, both GAM and ASReml produce strikingly sim
 
 ## Conclusions
 
-Generalized Additive Models (GAMs) provide a flexible and interpretable framework for capturing spatial variation and estimating treatment effects in field trials. In this study, we compared a GAM implementation to a classical spatial linear mixed model fitted with ASReml. Despite their structural differences, both models produced nearly identical genotype predictions and rankings after appropriate spatial adjustments.
+Generalized Additive Models (GAMs) provide a flexible and interpretable framework for capturing spatial variation and estimating treatment effects in field trials. In this study, we compared a GAM implementation to a classical spatial linear mixed model fitted with ASReml. Despite their structural differences, both models produced nearly identical genotype predictions and rankings after appropriate spatial adjustments. That agreement is less surprising once the GAM is seen as a mixed model too: both estimate genotype effects as random effects by REML, and differ mainly in how they describe the field.
 
 Our goal was not to determine which model is superior, but rather to explore how GAMs can be applied in practice and how their results compare to established methods. As the saying goes, “All models are wrong, but some are useful.” In this case, both GAM and ASReml are not perfect, yet useful tools that offer valuable insights when used thoughtfully in plant breeding pipelines.
 

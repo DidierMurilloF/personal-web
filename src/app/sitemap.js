@@ -2,7 +2,7 @@ import { getAllPosts } from "@/src/lib/posts";
 import { site } from "@/src/content/site";
 
 export default function sitemap() {
-  const pages = ["", "/about", "/blog", "/projects"].map((p) => ({
+  const pages = ["", "/about", "/blog", "/projects", "/cv", "/work-with-me"].map((p) => ({
     url: `${site.url}${p}`,
   }));
   const posts = getAllPosts().map((p) => ({

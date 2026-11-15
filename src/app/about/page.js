@@ -1,15 +1,16 @@
 import Image from "next/image";
-import { focus, now, site, timeline } from "@/src/content/site";
+import { focus, now, site } from "@/src/content/site";
+import { resume } from "@/src/content/resume";
 import { btnSecondary, card, pageTitle, sectionTitle, wrap } from "../ui";
 
 export const metadata = {
   title: "About",
   description:
-    "About Didier Murillo: statistician working in digital agriculture and predictive modeling at North Dakota State University.",
+    "About Didier Murillo, agricultural data scientist: genomic and phenomic prediction, field trial analysis, satellite crop monitoring and the software behind them.",
 };
 
 export default function About() {
-  const { linkedin, cv } = site.links;
+  const { cv } = site.links;
   return (
     <>
       <section className={`${wrap} pb-14 pt-16 sm:pt-20`}>
@@ -25,9 +26,10 @@ export default function About() {
           <div className="min-w-0 flex-[999_1_480px] text-lg leading-[1.7] text-[#33332F] sm:text-[19px]">
             <h1 className={`${pageTitle} mb-6 text-ink`}>About me</h1>
             <p className="mb-5">
-              I&rsquo;m Didier Murillo, a statistician by training and a
-              developer by calling. I work in digital agriculture at North
-              Dakota State University (NDSU), in Fargo.
+              I&rsquo;m Didier Murillo, an agricultural data scientist: a
+              statistician by training and a developer by calling. I work in
+              digital agriculture at North Dakota State University (NDSU), in
+              Fargo.
             </p>
             <p className="mb-5">
               My work sits where field trials meet predictive modeling: I
@@ -36,9 +38,17 @@ export default function About() {
               separate real genetic signal from the spatial noise of the field.
             </p>
             <p className="mb-5">
-              Then I turn those models into R Shiny apps, APIs and AI-assisted
-              tools, so researchers, breeders and stakeholders can use them
-              without writing code.
+              I also build satellite crop-monitoring pipelines that turn
+              vegetation indices into field-level forecasts and stress alerts,
+              and I turn models into R packages, Shiny apps and APIs, so
+              researchers, breeders and growers can use them without writing
+              code.
+            </p>
+            <p className="mb-5">
+              Along the way I&rsquo;ve built production R Shiny software for
+              clinical trial review in the pharmaceutical industry, which taught
+              me to ship tested, traceable software in a regulated
+              environment.
             </p>
             <p>
               Outside of work I love reading, traveling and learning about
@@ -77,15 +87,17 @@ export default function About() {
         </div>
       </section>
 
-      {timeline.length > 0 && (
+      {resume.experience.length > 0 && (
         <section className={`${wrap} pb-16`}>
           <h2 className={`${sectionTitle} mb-6`}>Along the way</h2>
           <ol className="border-l-2 border-[#CFE3E0]">
-            {timeline.map((t) => (
-              <li key={t.title} className="pb-7 pl-7 last:pb-0">
+            {resume.experience.map((t) => (
+              <li key={t.title + t.when} className="pb-7 pl-7 last:pb-0">
                 <p className="mb-1 text-sm text-subtle">{t.when}</p>
                 <p className="mb-1 text-lg font-semibold">{t.title}</p>
-                {t.text && <p className="leading-relaxed text-muted">{t.text}</p>}
+                <p className="leading-relaxed text-muted">
+                  {t.org} · {t.place}
+                </p>
               </li>
             ))}
           </ol>
@@ -99,15 +111,15 @@ export default function About() {
               Want the formal version?
             </h2>
             <p className="leading-relaxed text-forest-text">
-              My full work history lives on LinkedIn.
+              My full resume is on the CV page, and as a PDF.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
             <a
-              href={linkedin}
+              href="/cv"
               className="inline-flex min-h-[44px] items-center rounded-lg bg-mint px-5 font-semibold text-forest no-underline hover:bg-white"
             >
-              LinkedIn
+              View CV
             </a>
             {cv && (
               <a href={cv} className={`${btnSecondary} border-forest-border text-white`}>

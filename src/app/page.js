@@ -1,15 +1,23 @@
 import Link from "next/link";
-import FieldMap, { trialInfo, viridisGradient } from "@/src/components/FieldMap";
+import FieldMap, { trialInfo } from "@/src/components/FieldMap";
 import PostRow from "@/src/components/PostRow";
 import ProjectCard from "@/src/components/ProjectCard";
 import { getAllPosts } from "@/src/lib/posts";
 import { projects } from "@/src/content/projects";
 import { focus, pipeline, site, topics } from "@/src/content/site";
 import { sectionTitle, wrap } from "./ui";
+import { contactHref } from "@/src/lib/contact";
 
 export const metadata = {
   title: { absolute: `${site.name} | ${site.title}` },
 };
+
+// Facts under the hero buttons. "10+ years" counts from the 2014 statistician role.
+const proof = [
+  { value: "10+ years", label: "in applied statistics" },
+  { value: "FielDHub", label: "on CRAN, peer-reviewed" },
+  { value: "R · Python", label: "Shiny, APIs, Docker" },
+];
 
 const monoLabel = "font-mono text-[13px] font-medium uppercase tracking-[0.06em]";
 
@@ -54,14 +62,13 @@ export default function Home() {
           <div className="min-w-0 flex-[999_1_480px]">
             <p className={`${monoLabel} mb-5 text-mint`}>{site.role}</p>
             <h1 className="mb-6 font-display text-[38px] font-bold leading-[1.05] tracking-tight sm:text-[54px]">
-              Turning field data into predictions breeders and growers can act
-              on.
+              Predictive models for plant breeding and crop monitoring.
             </h1>
             <p className="mb-8 max-w-[560px] text-lg leading-relaxed text-forest-text sm:text-[19px]">
-              I&rsquo;m Didier, a statistician at NDSU. I design field
-              experiments, build predictive models, from spatial and mixed
-              models to machine learning and genomic prediction, and ship them
-              as tools people actually use.
+              I build statistical and machine learning models that predict
+              genotype performance from genomic, phenomic and field trial
+              data, monitor crops from satellite imagery, and turn them into
+              software that breeders and researchers use every day.
             </p>
             <div className="flex flex-wrap gap-3">
               <Link
@@ -70,13 +77,29 @@ export default function Home() {
               >
                 See my work
               </Link>
+              {site.links.cv && (
+                <a
+                  href={site.links.cv}
+                  className="inline-flex min-h-[44px] items-center rounded-lg border border-forest-border px-5 font-semibold text-white no-underline hover:border-mint"
+                >
+                  Download CV
+                </a>
+              )}
               <Link
-                href="/blog"
+                href="/work-with-me"
                 className="inline-flex min-h-[44px] items-center rounded-lg border border-forest-border px-5 font-semibold text-white no-underline hover:border-mint"
               >
-                Read the blog
+                Work with me
               </Link>
             </div>
+            <dl className="mt-10 flex flex-wrap gap-x-10 gap-y-4 border-t border-forest-line pt-6 text-sm text-forest-dim">
+              {proof.map((p) => (
+                <div key={p.value}>
+                  <dt className="font-display text-lg font-semibold text-white">{p.value}</dt>
+                  <dd>{p.label}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
 
           <figure className="m-0 flex-[1_1_400px] rounded-[18px] border border-forest-line bg-forest-raised p-5 sm:p-6">
@@ -89,18 +112,6 @@ export default function Home() {
               label={`Map of a ${trialInfo.plots}-plot field trial, each plot colored by the spatial yield trend estimated with a GAM`}
               className="w-full"
             />
-            <figcaption className="mt-4 flex flex-wrap items-center justify-between gap-3 text-[13px] text-forest-text">
-              <span>Spatial yield trend, fitted GAM</span>
-              <span className="flex items-center gap-2">
-                low
-                <span
-                  aria-hidden="true"
-                  className="inline-block h-2 w-28 rounded"
-                  style={{ background: viridisGradient }}
-                />
-                high
-              </span>
-            </figcaption>
           </figure>
         </div>
       </section>
@@ -188,6 +199,34 @@ export default function Home() {
             </li>
           ))}
         </ul>
+      </section>
+      <section className={`${wrap} pb-24`}>
+        <div className="flex flex-wrap items-center justify-between gap-6 rounded-2xl bg-accent-soft p-9">
+          <div className="max-w-xl">
+            <p className={`${monoLabel} mb-2 text-accent`}>Work with me</p>
+            <h2 className="mb-2 font-display text-2xl font-bold text-accent-ink sm:text-[28px]">
+              Have field, genomic or satellite data and a decision to make?
+            </h2>
+            <p className="leading-relaxed text-[#24433F]">
+              I consult and collaborate on trial design and analysis, predictive
+              modeling, ag data pipelines and apps, and training.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/work-with-me"
+              className="inline-flex min-h-[44px] items-center rounded-lg bg-accent px-5 font-semibold text-white no-underline hover:bg-accent-dark"
+            >
+              See how I can help
+            </Link>
+            <a
+              href={contactHref()}
+              className="inline-flex min-h-[44px] items-center rounded-lg border border-accent px-5 font-semibold text-accent-dark no-underline hover:bg-white"
+            >
+              Email me
+            </a>
+          </div>
+        </div>
       </section>
     </>
   );
